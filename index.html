@@ -1,952 +1,556 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poison Door 🚪☠️ — Marque Seu Show</title>
-  <meta name="description" content="Poison Door — banda de rock psicodélico. Marque um show direto pelo site." />
-  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg-deep:     #040008;
-      --bg-surface:  #0d0020;
-      --neon-pink:   #ff00cc;
-      --neon-green:  #00ff88;
-      --neon-purple: #9900ff;
-      --neon-cyan:   #00eeff;
-      --neon-red:    #ff1144;
-      --wa-green:    #25d366;
-      --text-main:   #e8d5ff;
-      --text-dim:    rgba(232, 213, 255, 0.5);
-      --border-glow: rgba(255, 0, 204, 0.25);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg-deep);
-      color: var(--text-main);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Psychedelic animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 15% 25%, rgba(153, 0, 255, 0.18) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 45% at 85% 75%, rgba(255, 0, 204, 0.13) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 50% 50%, rgba(0, 238, 255, 0.06) 0%, transparent 70%);
-      animation: bg-pulse 9s ease-in-out infinite alternate;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* CRT scanlines */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(120, 0, 220, 0.025) 3px,
-        rgba(120, 0, 220, 0.025) 4px
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes bg-pulse {
-      0%   { opacity: 1; transform: scale(1) rotate(0deg); }
-      50%  { opacity: 0.85; transform: scale(1.04) rotate(0.5deg); }
-      100% { opacity: 0.7; transform: scale(1.08) rotate(-0.5deg); }
-    }
-
-    /* ── HEADER ─────────────────────────────────────────────────── */
-    header {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 64px 20px 48px;
-      border-bottom: 1px solid var(--border-glow);
-      overflow: hidden;
-    }
-
-    header .deco-line {
-      position: absolute;
-      left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--neon-purple), var(--neon-pink), var(--neon-purple), transparent);
-      animation: line-travel 4s linear infinite;
-    }
-    header .deco-line.top    { top: 0; }
-    header .deco-line.bottom { bottom: 0; }
-
-    @keyframes line-travel {
-      0%   { opacity: 0.4; background-position: -200% 0; }
-      50%  { opacity: 1; }
-      100% { opacity: 0.4; background-position: 200% 0; }
-    }
-
-    .logo-img {
-      width: clamp(100px, 22vw, 170px);
-      height: clamp(100px, 22vw, 170px);
-      object-fit: contain;
-      display: block;
-      margin: 0 auto 18px;
-      border-radius: 50%;
-      filter:
-        drop-shadow(0 0 18px rgba(153, 0, 255, 0.7))
-        drop-shadow(0 0 40px rgba(255, 0, 204, 0.4));
-      animation: logo-pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes logo-pulse {
-      0%, 100% {
-        filter:
-          drop-shadow(0 0 14px rgba(153, 0, 255, 0.6))
-          drop-shadow(0 0 35px rgba(255, 0, 204, 0.3));
-        transform: scale(1);
-      }
-      50% {
-        filter:
-          drop-shadow(0 0 28px rgba(153, 0, 255, 1))
-          drop-shadow(0 0 70px rgba(255, 0, 204, 0.6))
-          drop-shadow(0 0 100px rgba(0, 238, 255, 0.2));
-        transform: scale(1.04);
-      }
-    }
-
-    .band-name {
-      font-family: 'Metal Mania', cursive;
-      font-size: clamp(3.2rem, 11vw, 8.5rem);
-      letter-spacing: 0.04em;
-      background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 45%, var(--neon-cyan) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      position: relative;
-      display: inline-block;
-      animation: glitch 7s infinite;
-    }
-
-    @keyframes glitch {
-      0%,  88%, 100% {
-        transform: none;
-        filter: drop-shadow(0 0 18px rgba(255,0,204,0.7)) drop-shadow(0 0 60px rgba(153,0,255,0.35));
-      }
-      89% { transform: translate(-4px, 1px) skewX(-3deg);
-            filter: drop-shadow(-4px 0 var(--neon-cyan)) drop-shadow(4px 0 var(--neon-red)); }
-      90% { transform: translate(4px, -1px) skewX(3deg);
-            filter: drop-shadow(4px 0 var(--neon-pink)) drop-shadow(-4px 0 var(--neon-green)); }
-      91% { transform: none;
-            filter: drop-shadow(0 0 18px rgba(255,0,204,0.7)); }
-      92% { transform: translate(-2px, 2px); }
-      93% { transform: none;
-            filter: drop-shadow(0 0 35px rgba(0,238,255,0.8)); }
-    }
-
-    .tagline {
-      font-size: clamp(0.75rem, 2vw, 1rem);
-      color: var(--text-dim);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-top: 10px;
-    }
-
-    .tagline em {
-      font-style: normal;
-      color: var(--neon-green);
-      text-shadow: 0 0 10px var(--neon-green);
-    }
-
-    /* ── MAIN ──────────────────────────────────────────────────── */
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 64px 20px 40px;
-    }
-
-    .section-title {
-      font-family: 'Metal Mania', cursive;
-      font-size: clamp(1.7rem, 4vw, 2.6rem);
-      text-align: center;
-      color: var(--neon-green);
-      text-shadow: 0 0 22px var(--neon-green);
-      margin-bottom: 10px;
-      letter-spacing: 0.1em;
-    }
-
-    .section-sub {
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 0.9rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 50px;
-    }
-
-    /* ── SETUP BANNER ──────────────────────────────────────────── */
-    .setup-banner {
-      background: rgba(255, 200, 0, 0.07);
-      border: 1px solid rgba(255, 200, 0, 0.3);
-      border-radius: 12px;
-      padding: 14px 20px;
-      margin-bottom: 36px;
-      font-size: 0.85rem;
-      color: rgba(255, 230, 100, 0.85);
-      line-height: 1.6;
-    }
-    .setup-banner strong { color: #ffe066; }
-    .setup-banner code {
-      background: rgba(0, 0, 0, 0.35);
-      padding: 1px 5px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-    }
-    .setup-banner.hidden { display: none; }
-
-    /* ── CALENDAR ──────────────────────────────────────────────── */
-    .calendar-wrapper {
-      background: rgba(13, 0, 32, 0.75);
-      border: 1px solid var(--border-glow);
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 40px;
-      backdrop-filter: blur(12px);
-      box-shadow:
-        0 0 50px rgba(255, 0, 204, 0.08),
-        inset 0 0 50px rgba(153, 0, 255, 0.04);
-    }
-
-    .calendar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-
-    .cal-nav-btn {
-      background: rgba(255, 0, 204, 0.08);
-      border: 1px solid rgba(255, 0, 204, 0.4);
-      color: var(--neon-pink);
-      border-radius: 8px;
-      width: 42px;
-      height: 42px;
-      font-size: 1.4rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Rajdhani', sans-serif;
-    }
-
-    .cal-nav-btn:hover {
-      background: rgba(255, 0, 204, 0.22);
-      box-shadow: 0 0 16px rgba(255, 0, 204, 0.5);
-    }
-
-    .cal-nav-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    .cal-month-label {
-      font-family: 'Metal Mania', cursive;
-      font-size: 1.45rem;
-      color: var(--neon-purple);
-      text-shadow: 0 0 15px var(--neon-purple);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-align: center;
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      transition: opacity 0.2s;
-    }
-
-    .cal-day-header {
-      text-align: center;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--text-dim);
-      padding: 6px 0 10px;
-      text-transform: uppercase;
-    }
-
-    .cal-day {
-      aspect-ratio: 1;
-      border: 1px solid transparent;
-      border-radius: 10px;
-      background: transparent;
-      color: var(--text-main);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.18s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 1px;
-      position: relative;
-      outline: none;
-    }
-
-    .cal-day:hover:not(:disabled):not(.busy) {
-      background: rgba(0, 255, 136, 0.1);
-      border-color: rgba(0, 255, 136, 0.45);
-      color: var(--neon-green);
-      box-shadow: 0 0 14px rgba(0, 255, 136, 0.28);
-    }
-
-    .cal-day.today {
-      border-color: rgba(255, 0, 204, 0.55);
-      background: rgba(255, 0, 204, 0.07);
-    }
-
-    .cal-day.selected {
-      background: rgba(0, 255, 136, 0.18) !important;
-      border-color: var(--neon-green) !important;
-      color: var(--neon-green) !important;
-      box-shadow: 0 0 22px rgba(0, 255, 136, 0.5) !important;
-    }
-
-    .cal-day.busy {
-      background: rgba(255, 17, 68, 0.06);
-      border-color: rgba(255, 17, 68, 0.2);
-      color: rgba(255, 100, 120, 0.45);
-      cursor: not-allowed;
-    }
-
-    .cal-day:disabled {
-      color: rgba(255, 255, 255, 0.14);
-      cursor: not-allowed;
-      border-color: transparent;
-      background: transparent;
-    }
-
-    .cal-day.empty {
-      cursor: default;
-      background: transparent;
-      border: none;
-      pointer-events: none;
-    }
-
-    .busy-label {
-      font-size: 0.42rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255, 100, 120, 0.55);
-      line-height: 1;
-    }
-
-    .calendar-legend {
-      display: flex;
-      gap: 22px;
-      justify-content: center;
-      margin-top: 22px;
-      flex-wrap: wrap;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-    }
-
-    .legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-
-    .legend-dot.avail  { background: rgba(0, 255, 136, 0.2); border: 1px solid rgba(0,255,136,0.5); }
-    .legend-dot.busy   { background: rgba(255, 17, 68, 0.12); border: 1px solid rgba(255,17,68,0.35); }
-    .legend-dot.today  { background: rgba(255, 0, 204, 0.12); border: 1px solid rgba(255,0,204,0.5); }
-
-    #loading-calendar {
-      text-align: center;
-      padding: 10px 0 6px;
-      font-size: 0.85rem;
-      letter-spacing: 0.12em;
-      color: var(--neon-purple);
-      animation: pulse-text 1s ease-in-out infinite alternate;
-      display: none;
-    }
-
-    @keyframes pulse-text {
-      from { opacity: 0.4; }
-      to   { opacity: 1; }
-    }
-
-    /* ── BOOKING SECTION ───────────────────────────────────────── */
-    #booking-section { margin-top: 10px; }
-
-    .no-date-msg {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-dim);
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-    }
-
-    .no-date-msg .arrow {
-      font-size: 2.8rem;
-      display: block;
-      margin-bottom: 14px;
-      animation: arrow-float 1.6s ease-in-out infinite;
-    }
-
-    @keyframes arrow-float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-12px); }
-    }
-
-    .booking-form-wrapper {
-      background: rgba(13, 0, 32, 0.75);
-      border: 1px solid var(--border-glow);
-      border-radius: 20px;
-      padding: 36px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 50px rgba(255, 0, 204, 0.07), inset 0 0 40px rgba(153, 0, 255, 0.03);
-      animation: form-appear 0.35s ease-out;
-    }
-
-    @keyframes form-appear {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .date-display {
-      text-align: center;
-      margin-bottom: 32px;
-      padding: 16px 20px;
-      border: 1px solid rgba(0, 255, 136, 0.3);
-      border-radius: 12px;
-      background: rgba(0, 255, 136, 0.04);
-    }
-
-    .date-display .lbl {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 5px;
-    }
-
-    .date-display .val {
-      font-family: 'Metal Mania', cursive;
-      font-size: 1.4rem;
-      color: var(--neon-green);
-      text-shadow: 0 0 12px var(--neon-green);
-      letter-spacing: 0.05em;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--neon-purple);
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(153, 0, 255, 0.28);
-      border-radius: 10px;
-      color: var(--text-main);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 14px 18px;
-      transition: all 0.2s;
-      outline: none;
-      -webkit-appearance: none;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 16px rgba(255, 0, 204, 0.2);
-      background: rgba(255, 0, 204, 0.03);
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.18);
-      font-weight: 400;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 80px;
-      line-height: 1.5;
-    }
-
-    .wa-btn {
-      width: 100%;
-      padding: 18px 24px;
-      margin-top: 8px;
-      background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-      border: none;
-      border-radius: 14px;
-      color: #fff;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.22s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 4px 24px rgba(37, 211, 102, 0.28);
-    }
-
-    .wa-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 36px rgba(37, 211, 102, 0.5);
-    }
-
-    .wa-btn:active {
-      transform: translateY(-1px);
-    }
-
-    .wa-btn svg {
-      flex-shrink: 0;
-    }
-
-    /* ── SETUP GUIDE ───────────────────────────────────────────── */
-    .setup-guide {
-      margin-top: 72px;
-      padding: 32px;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 18px;
-    }
-
-    .setup-guide h3 {
-      font-family: 'Metal Mania', cursive;
-      font-size: 1.25rem;
-      color: var(--neon-purple);
-      letter-spacing: 0.1em;
-      margin-bottom: 20px;
-    }
-
-    .setup-guide p, .setup-guide ol, .setup-guide li {
-      color: var(--text-dim);
-      font-size: 0.88rem;
-      line-height: 1.85;
-    }
-
-    .setup-guide ol { padding-left: 22px; }
-    .setup-guide p { margin-bottom: 14px; }
-
-    .setup-guide strong { color: var(--text-main); }
-
-    .setup-guide code {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.78rem;
-      color: var(--neon-cyan);
-    }
-
-    /* ── FOOTER ────────────────────────────────────────────────── */
-    footer {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 44px 20px;
-      border-top: 1px solid var(--border-glow);
-      color: var(--text-dim);
-      font-size: 0.82rem;
-      letter-spacing: 0.1em;
-    }
-
-    footer p + p { margin-top: 6px; }
-
-    /* ── RESPONSIVE ────────────────────────────────────────────── */
-    @media (max-width: 600px) {
-      header { padding: 48px 16px 36px; }
-      main { padding: 48px 14px 30px; }
-      .calendar-wrapper, .booking-form-wrapper { padding: 20px 14px; }
-      .calendar-grid { gap: 3px; }
-      .cal-day { font-size: 0.78rem; border-radius: 7px; }
-      .cal-day-header { font-size: 0.62rem; }
-      .calendar-legend { gap: 14px; }
-      .setup-guide { padding: 22px 16px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POISON DOOR — Rock Psicodélico • São Paulo</title>
+<meta name="description" content="POISON DOOR — banda de rock psicodélico de São Paulo. Contato para shows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0a0a;
+  --paper:#e9e4d8;
+  --bone:#cfc9bb;
+  --ash:#8f897c;
+  --white:#f6f3ec;
+  --metal:'Metal Mania', cursive;
+  --serif:'Cinzel', serif;
+  --body:'Cormorant Garamond', serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:#000;
+  color:var(--paper);
+  font-family:var(--body);
+  font-weight:400;
+  font-size:20px;
+  line-height:1.55;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--paper);color:#000}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#000}
+::-webkit-scrollbar-thumb{background:var(--ash)}
+a{color:inherit;text-decoration:none}
+
+/* ============ FUNDO EM CAMADAS ============ */
+.bg{position:fixed;inset:0;z-index:-3;overflow:hidden;background:#000}
+/* porta (foto base) */
+.bg-door{
+  position:absolute;inset:-4%;
+  background:url('bg-door.jpg') center/cover no-repeat;
+  filter:grayscale(1) contrast(1.15) brightness(.42);
+  transform:scale(1.06);
+}
+/* linhas densas / contorno tipo xilogravura por cima */
+.bg-lines{position:absolute;inset:0;opacity:.16;mix-blend-mode:screen}
+/* vinheta = profundidade do portal */
+.bg-vignette{
+  position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 38%,transparent 0%,transparent 30%,rgba(0,0,0,.55) 66%,rgba(0,0,0,.92) 100%);
+}
+/* grão de filme */
+.grain{
+  position:fixed;inset:-50%;z-index:50;pointer-events:none;
+  opacity:.07;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 600ms steps(4) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}
+  50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-2%)}
+  100%{transform:translate(3%,3%)}
+}
+
+/* ============ TEXTURA SVG REUTILIZÁVEL ============ */
+.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ============ NAV ============ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(20px,5vw,64px);
+  mix-blend-mode:difference;
+}
+.nav-mark{font-family:var(--metal);font-size:24px;letter-spacing:1px;color:#fff}
+.nav-links{display:flex;gap:clamp(16px,3vw,34px);font-family:var(--serif);
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#fff}
+.nav-links a{opacity:.85;transition:opacity .3s}
+.nav-links a:hover{opacity:1}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* ============ HERO ============ */
+.hero{
+  min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;position:relative;padding:120px 24px 80px;
+}
+.portal{
+  position:relative;width:min(78vw,360px);aspect-ratio:1;
+  display:grid;place-items:center;margin-bottom:6px;
+}
+.portal .vortex{
+  position:absolute;inset:-30%;
+  opacity:.55;will-change:transform;
+  animation:spin 64s linear infinite;
+  mix-blend-mode:screen;
+}
+.portal .vortex.r{animation-direction:reverse;animation-duration:96s;opacity:.3;inset:-12%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.portal .glow{
+  position:absolute;inset:18%;border-radius:50%;
+  background:radial-gradient(circle,rgba(246,243,236,.22),transparent 62%);
+  animation:breathe 6s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.5;transform:scale(.96)}50%{opacity:1;transform:scale(1.06)}}
+.portal img.logo{
+  position:relative;width:60%;aspect-ratio:1;object-fit:cover;z-index:2;
+  border-radius:50%;
+  filter:grayscale(1) contrast(1.2);
+  box-shadow:
+    0 0 0 1px rgba(207,201,187,.6),
+    0 0 0 7px rgba(10,10,10,.55),
+    0 0 0 8px rgba(207,201,187,.35),
+    0 12px 44px rgba(0,0,0,.8);
+}
+.bandname{
+  font-family:var(--metal);
+  font-size:clamp(58px,15vw,168px);
+  line-height:.86;font-weight:400;color:var(--white);
+  text-shadow:0 0 1px #000, 3px 4px 0 rgba(0,0,0,.55);
+  margin-top:8px;letter-spacing:1px;
+}
+.tagline{
+  font-family:var(--serif);font-size:clamp(11px,2.6vw,15px);
+  letter-spacing:.42em;text-transform:uppercase;color:var(--bone);
+  margin-top:18px;opacity:.85;
+}
+/* entrada suave do hero */
+.portal,.bandname,.tagline{opacity:0;animation:riseIn 1s cubic-bezier(.16,1,.3,1) forwards}
+.portal{animation-delay:.15s}
+.bandname{animation-delay:.4s}
+.tagline{animation-delay:.7s;--end-op:.85}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:var(--end-op,1);transform:translateY(0)}}
+.scroll-cue{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  font-family:var(--serif);font-size:10px;letter-spacing:.4em;
+  text-transform:uppercase;color:var(--ash);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  animation:bob 2.6s ease-in-out infinite;
+}
+.scroll-cue span{display:block;width:1px;height:42px;
+  background:linear-gradient(var(--ash),transparent)}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* divisória de tinta */
+.rule{
+  width:min(86vw,1100px);margin:0 auto;height:60px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1100' height='60' viewBox='0 0 1100 60'%3E%3Cpath d='M0 30 Q 275 6 550 30 T 1100 30' fill='none' stroke='%23cfc9bb' stroke-width='1.4' opacity='.5'/%3E%3Ccircle cx='550' cy='30' r='6' fill='none' stroke='%23cfc9bb' stroke-width='1.2' opacity='.6'/%3E%3Ccircle cx='550' cy='30' r='2' fill='%23cfc9bb' opacity='.7'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* ============ SEÇÃO INTEGRANTES (character select) ============ */
+.roster{padding:60px 0 90px;position:relative}
+.section-head{text-align:center;margin-bottom:34px;padding:0 24px}
+.section-kicker{font-family:var(--serif);font-size:11px;letter-spacing:.42em;
+  text-transform:uppercase;color:var(--ash);margin-bottom:12px}
+.section-title{font-family:var(--metal);font-size:clamp(34px,7vw,64px);
+  color:var(--white);line-height:.9}
+
+.stage{
+  position:relative;max-width:1040px;margin:0 auto;padding:0 clamp(16px,5vw,48px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+  gap:clamp(20px,5vw,56px);align-items:center;min-height:440px;
+  touch-action:pan-y;user-select:none;
+}
+@media(max-width:760px){
+  .stage{grid-template-columns:1fr;text-align:center;min-height:auto;
+    position:relative;row-gap:8px}
+  .figure-wrap{height:300px;aspect-ratio:auto;max-width:300px;margin:0 auto;width:100%}
+}
+
+/* silhueta + portal */
+.figure-wrap{position:relative;aspect-ratio:3/4;display:grid;place-items:center}
+/* disco claro de papel atrás (faz a silhueta preta saltar, igual o gato) */
+.figure-wrap .halo{
+  position:absolute;inset:3% 8%;border-radius:50%;z-index:0;
+  background:radial-gradient(circle at 50% 46%,
+    rgba(233,228,216,.96) 0%,rgba(214,208,195,.78) 38%,
+    rgba(176,170,156,.22) 62%,transparent 74%);
+  animation:breathe 8s ease-in-out infinite;
+}
+.figure-wrap .disc{
+  position:absolute;inset:0;opacity:.85;animation:spin 80s linear infinite;
+  will-change:transform;
+}
+.figure-wrap .disc.r{animation-direction:reverse;animation-duration:120s;
+  inset:8%;opacity:.5}
+/* sobre o halo claro, os traços do vórtice viram tinta preta */
+.figure-wrap .disc g{stroke:#111 !important}
+#figure{position:absolute;inset:0;z-index:2;display:grid;place-items:center}
+.silhouette{position:relative;z-index:2;height:86%;width:auto;max-width:90%;
+  filter:drop-shadow(0 12px 30px rgba(0,0,0,.85));will-change:opacity,transform;
+  transition:opacity .34s ease, transform .55s cubic-bezier(.16,1,.3,1)}
+.fade-out .silhouette{opacity:0;transform:translateY(18px) scale(.96)}
+
+/* texto do integrante */
+.bio-block{position:relative}
+.bio-index{font-family:var(--serif);font-size:13px;letter-spacing:.4em;
+  color:var(--ash);margin-bottom:10px}
+.bio-role{font-family:var(--serif);font-weight:600;font-size:13px;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--bone);margin-bottom:6px}
+.bio-name{font-family:var(--metal);font-size:clamp(40px,8vw,76px);
+  line-height:.88;color:var(--white);margin-bottom:18px}
+.bio-text{font-size:clamp(17px,2.4vw,21px);line-height:1.6;color:var(--paper);
+  opacity:.82;max-width:42ch}
+@media(max-width:760px){.bio-text{margin:0 auto}}
+.bio-block{will-change:opacity,transform;
+  transition:opacity .34s ease, transform .55s cubic-bezier(.16,1,.3,1)}
+.fade-out .bio-block{opacity:0;transform:translateY(16px)}
+
+/* setas */
+.arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  width:54px;height:54px;border:1px solid rgba(207,201,187,.4);
+  border-radius:50%;display:grid;place-items:center;cursor:pointer;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
+  color:var(--bone);transition:.3s;font-family:var(--serif)}
+.arrow:hover{border-color:var(--white);color:var(--white);background:rgba(0,0,0,.6)}
+.arrow svg{width:20px;height:20px}
+.arrow.prev{left:-6px}.arrow.next{right:-6px}
+/* no mobile, as setas ficam alinhadas ao centro vertical da figura (300px de altura) */
+@media(max-width:760px){
+  .arrow{top:150px;transform:translateY(-50%);width:48px;height:48px}
+  .arrow.prev{left:2px}.arrow.next{right:2px}
+}
+
+/* roster de seleção (thumbs) */
+.picker{display:flex;justify-content:center;gap:clamp(10px,2vw,18px);
+  margin-top:48px;flex-wrap:wrap;padding:0 20px}
+.pick{
+  width:66px;height:84px;border:1px solid rgba(207,201,187,.3);
+  display:grid;place-items:center;cursor:pointer;position:relative;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(233,228,216,.8),rgba(176,170,156,.35) 70%);
+  transition:.35s;overflow:hidden;filter:grayscale(1) brightness(.78)}
+.pick svg{height:74%;width:auto;transition:.35s}
+.pick:hover{border-color:rgba(207,201,187,.7);filter:grayscale(1) brightness(.95)}
+.pick.active{border-color:var(--white);filter:none;
+  box-shadow:0 0 0 1px var(--white),0 6px 22px rgba(0,0,0,.6)}
+.pick .tag{position:absolute;bottom:3px;font-family:var(--serif);font-size:7px;
+  letter-spacing:.12em;text-transform:uppercase;color:#2c281f;opacity:.85;
+  font-weight:600;text-shadow:0 1px 1px rgba(233,228,216,.6)}
+
+/* ============ CONTATO ============ */
+.contact{padding:90px 24px 70px;text-align:center;position:relative}
+.contact h2{font-family:var(--metal);font-size:clamp(38px,8vw,80px);
+  color:var(--white);line-height:.9;margin-bottom:14px}
+.contact p{font-family:var(--body);font-size:clamp(18px,3vw,23px);
+  color:var(--paper);opacity:.78;max-width:34ch;margin:0 auto 40px}
+.cta-row{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+.cta{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--serif);font-weight:600;font-size:14px;
+  letter-spacing:.22em;text-transform:uppercase;
+  padding:18px 34px;border:1px solid var(--bone);color:var(--white);
+  position:relative;overflow:hidden;transition:color .4s;z-index:1}
+.cta svg{width:20px;height:20px}
+.cta::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--paper);transform:translateY(101%);transition:transform .4s ease}
+.cta:hover{color:#000}
+.cta:hover::before{transform:translateY(0)}
+.cta:hover svg{stroke:#000;fill:#000}
+
+footer{padding:50px 24px;text-align:center;
+  font-family:var(--serif);font-size:11px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--ash)}
+footer .eye{font-size:16px;margin-bottom:12px;opacity:.6}
+
+/* acessibilidade: menos movimento */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+  .portal,.bandname{opacity:1 !important;transform:none !important}
+  .tagline{opacity:.85 !important;transform:none !important}
+}
+</style>
 </head>
 <body>
 
-  <!-- ── HEADER ── -->
-  <header>
-    <div class="deco-line top"></div>
-    <img src="logo.png" alt="Poison Door logo" class="logo-img" />
-    <h1 class="band-name">POISON DOOR</h1>
-    <p class="tagline">Rock Psicodélico &nbsp;•&nbsp; <em>Contrate o Show</em> &nbsp;•&nbsp; Rock Psicodélico</p>
-    <div class="deco-line bottom"></div>
-  </header>
+<!-- ===== FUNDO ===== -->
+<div class="bg">
+  <div class="bg-door"></div>
+  <svg class="bg-lines" preserveAspectRatio="xMidYMid slice" viewBox="0 0 800 800">
+    <defs>
+      <filter id="warp"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.012" numOctaves="3" seed="7" result="t"/>
+        <feDisplacementMap in="SourceGraphic" in2="t" scale="120"/></filter>
+    </defs>
+    <g filter="url(#warp)" fill="none" stroke="#cfc9bb" stroke-width="1">
+      <!-- linhas concêntricas tipo xilogravura -->
+      <g id="rings"></g>
+    </g>
+  </svg>
+  <div class="bg-vignette"></div>
+</div>
+<div class="grain"></div>
 
-  <!-- ── MAIN ── -->
-  <main>
-    <h2 class="section-title">⚡ MARQUE SEU SHOW ⚡</h2>
-    <p class="section-sub">Escolha uma data disponível e envie a proposta direto no WhatsApp</p>
-    <p style="text-align:center; margin-top:-36px; margin-bottom:48px; font-size:0.85rem; color: var(--neon-pink); text-shadow: 0 0 10px rgba(255,0,204,0.5); letter-spacing:0.12em;">📍 SHOWS APENAS EM SÃO PAULO</p>
+<!-- ===== DEFINIÇÕES SVG (vórtice + silhuetas) ===== -->
+<svg class="svg-defs" aria-hidden="true">
+  <defs>
+    <filter id="inkwarp"><feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="3" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="9"/></filter>
+  </defs>
+</svg>
 
-    <!-- Setup warning (hidden once configured) -->
-    <div class="setup-banner" id="setup-banner">
-      ⚙️ <strong>Falta configurar:</strong> edite o arquivo <code>index.html</code> e preencha
-      <code>CONFIG.whatsapp</code> com o número da banda (e opcionalmente o Google Calendar).
-      <a href="#setup-guide" style="color:#ffe066; margin-left:4px;">Ver instruções ↓</a>
+<nav>
+  <a class="nav-mark" href="#top">PD</a>
+  <div class="nav-links">
+    <a href="#integrantes">Integrantes</a>
+    <a href="#contato">Contato</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="portal">
+    <svg class="vortex" viewBox="0 0 400 400" aria-hidden="true"></svg>
+    <svg class="vortex r" viewBox="0 0 400 400" aria-hidden="true"></svg>
+    <div class="glow"></div>
+    <img class="logo" src="logo.png" alt="POISON DOOR — olho psicodélico">
+  </div>
+  <h1 class="bandname">POISON<br>DOOR</h1>
+  <p class="tagline">Rock Psicodélico &nbsp;•&nbsp; São Paulo</p>
+  <div class="scroll-cue">Atravesse<span></span></div>
+</header>
+
+<div class="rule"></div>
+
+<!-- ===== INTEGRANTES ===== -->
+<section class="roster" id="integrantes">
+  <div class="section-head">
+    <div class="section-kicker">Escolha seu portador</div>
+    <h2 class="section-title">Os Cinco</h2>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="arrow prev" id="prev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg>
     </div>
 
-    <!-- ── CALENDAR ── -->
-    <div class="calendar-wrapper">
-      <div class="calendar-header">
-        <button class="cal-nav-btn" id="btn-prev" aria-label="Mês anterior">&#8249;</button>
-        <div class="cal-month-label" id="month-label"></div>
-        <button class="cal-nav-btn" id="btn-next" aria-label="Próximo mês">&#8250;</button>
-      </div>
-      <div id="loading-calendar">carregando disponibilidade...</div>
-      <div class="calendar-grid" id="calendar-grid"></div>
-      <div class="calendar-legend">
-        <div class="legend-item"><div class="legend-dot avail"></div>Disponível</div>
-        <div class="legend-item"><div class="legend-dot busy"></div>Ocupado</div>
-        <div class="legend-item"><div class="legend-dot today"></div>Hoje</div>
-      </div>
+    <div class="figure-wrap">
+      <div class="halo"></div>
+      <svg class="disc" viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <svg class="disc r" viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <div id="figure"></div>
     </div>
 
-    <!-- ── BOOKING SECTION ── -->
-    <div id="booking-section">
-      <div class="no-date-msg">
-        <span class="arrow">☝️</span>
-        Selecione uma data disponível no calendário para liberar o formulário de proposta.
-      </div>
+    <div class="bio-block" id="bioBlock">
+      <div class="bio-index" id="bioIndex">I / V</div>
+      <div class="bio-role" id="bioRole"></div>
+      <div class="bio-name" id="bioName"></div>
+      <p class="bio-text" id="bioText"></p>
     </div>
 
-    <!-- ── SETUP GUIDE ── -->
-    <div class="setup-guide" id="setup-guide">
-      <h3>⚙️ COMO CONFIGURAR ESTE SITE</h3>
-
-      <p><strong>1. Número de WhatsApp da banda</strong><br>
-      Abra <code>index.html</code>, localize <code>CONFIG.whatsapp</code> e substitua
-      <code>'SEU_NUMERO_AQUI'</code> pelo número com código do país, sem espaços ou traços.<br>
-      Exemplo: <code>whatsapp: '5511999887766'</code></p>
-
-      <p><strong>2. Google Calendar (mostrar datas ocupadas)</strong></p>
-      <ol>
-        <li>Crie um Google Calendar chamado "Poison Door – Shows" (ou use um existente)</li>
-        <li>Vá em Configurações → marque <strong>Tornar público</strong></li>
-        <li>Copie o <strong>Calendar ID</strong> (parece com <code>abc123@group.calendar.google.com</code>)</li>
-        <li>No <a href="https://console.cloud.google.com/" style="color:var(--neon-cyan);" target="_blank" rel="noopener">Google Cloud Console</a>, crie um projeto, habilite a <strong>Google Calendar API</strong> e gere uma <strong>API Key</strong> restrita ao seu domínio GitHub Pages</li>
-        <li>Cole os valores em <code>CONFIG.googleCalendarId</code> e <code>CONFIG.googleApiKey</code></li>
-        <li>Adicione eventos no Google Calendar — o site bloqueia as datas automaticamente</li>
-      </ol>
-
-      <p style="margin-top:14px;"><strong>3. Hospedar no GitHub Pages</strong><br>
-      Crie um repositório no GitHub, coloque este arquivo como <code>index.html</code> na raiz,
-      depois vá em <strong>Settings → Pages → Source: main branch / (root)</strong> e salve.<br>
-      O site ficará disponível em <code>https://SEU-USUARIO.github.io/NOME-DO-REPO</code></p>
+    <div class="arrow next" id="next" aria-label="Próximo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
     </div>
-  </main>
+  </div>
 
-  <!-- ── FOOTER ── -->
-  <footer>
-    <p>☠️ &nbsp;POISON DOOR&nbsp; ☠️ &nbsp;—&nbsp; Todos os direitos reservados</p>
-    <p>Mandou a proposta? A gente responde em breve 🤘🎸</p>
-  </footer>
+  <div class="picker" id="picker"></div>
+</section>
 
-  <script>
-    // =====================================================================
-    //  ⚙️  CONFIG — edite estes valores
-    // =====================================================================
-    const CONFIG = {
-      // Número de WhatsApp da banda com código do país, sem espaços/traços
-      whatsapp: '5513996806044',
+<div class="rule"></div>
 
-      // Google Calendar público da banda (deixe '' para desativar)
-      googleCalendarId: '',
+<!-- ===== CONTATO ===== -->
+<section class="contact" id="contato">
+  <h2>Abra a porta</h2>
+  <p>Proposta de show, contratação ou ritual. Fale com a gente.</p>
+  <div class="cta-row">
+    <a class="cta" target="_blank" rel="noopener"
+       href="https://wa.me/5513996806044?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20proposta%20de%20show%20para%20a%20POISON%20DOOR.">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.13c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.23 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg>
+      WhatsApp
+    </a>
+    <a class="cta" target="_blank" rel="noopener" href="https://instagram.com/poisondoorbanda">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @poisondoorbanda
+    </a>
+  </div>
+</section>
 
-      // Chave de API do Google (com Google Calendar API habilitada)
-      googleApiKey: '',
-    };
-    // =====================================================================
+<footer>
+  <div class="eye">𓂀</div>
+  POISON DOOR &nbsp;·&nbsp; São Paulo &nbsp;·&nbsp; MMXXVI
+</footer>
 
-    // Oculta setup banner se número configurado
-    if (CONFIG.whatsapp !== 'SEU_NUMERO_AQUI') {
-      document.getElementById('setup-banner').classList.add('hidden');
-    }
+<script>
+/* ====== gera anéis de xilogravura no fundo ====== */
+(function(){
+  const g=document.getElementById('rings');if(!g)return;
+  let s='';for(let r=18;r<560;r+=11){const o=(0.5+Math.random()*0.5).toFixed(2);
+    s+=`<circle cx='400' cy='360' r='${r}' opacity='${o}'/>`;}
+  g.innerHTML=s;
+})();
 
-    // ── State ─────────────────────────────────────────────────────────────
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+/* ====== gera vórtice (raios + anéis com warp) reutilizável ====== */
+function vortexSVG(){
+  let rays='';for(let a=0;a<360;a+=6){
+    rays+=`<line x1='200' y1='200' x2='${200+190*Math.cos(a*Math.PI/180)}' y2='${200+190*Math.sin(a*Math.PI/180)}'/>`;}
+  let rings='';for(let r=14;r<196;r+=9){rings+=`<circle cx='200' cy='200' r='${r}'/>`;}
+  return `<defs><filter id='vw${Math.random().toString(36).slice(2,7)}'>
+    <feTurbulence type='fractalNoise' baseFrequency='0.01' numOctaves='2' seed='${(Math.random()*20)|0}' result='t'/>
+    <feDisplacementMap in='SourceGraphic' in2='t' scale='14'/></filter></defs>
+  <g fill='none' stroke='#cfc9bb' stroke-width='0.8' opacity='.9'>${rings}</g>
+  <g fill='none' stroke='#cfc9bb' stroke-width='0.5' opacity='.45'>${rays}</g>`;
+}
+document.querySelectorAll('.vortex, .disc').forEach(el=>{el.innerHTML=vortexSVG();
+  el.querySelector('g').parentNode.querySelectorAll('g').forEach(g=>{});});
+/* aplica o warp gerado */
+document.querySelectorAll('.vortex, .disc').forEach(el=>{
+  const f=el.querySelector('filter'); if(f){el.querySelectorAll('g').forEach(g=>g.setAttribute('filter',`url(#${f.id})`));}
+});
 
-    let viewYear  = today.getFullYear();
-    let viewMonth = today.getMonth();
-    let selectedDate = null;
+/* ====== silhuetas dos integrantes (SVG inline, traço de tinta) ====== */
+/* humanoide base + instrumento, preenchido em tinta */
+function sil(inner){
+  return `<svg class="silhouette" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#inkwarp)">
+      <g fill="#070707" stroke="#000" stroke-width="1">${inner}</g>
+      <!-- olhos brancos psicodélicos -->
+      <circle cx="92" cy="40" r="2.6" fill="#f6f3ec"/>
+      <circle cx="103" cy="40" r="2.6" fill="#f6f3ec"/>
+    </g></svg>`;
+}
+const SIL={
+  vocalista: sil(`
+    <ellipse cx="98" cy="40" rx="18" ry="21"/>
+    <path d="M78 58 Q98 70 118 58 L128 130 Q98 150 70 130 Z"/>
+    <path d="M118 70 L150 96 L146 104 L112 86 Z"/>
+    <ellipse cx="152" cy="100" rx="9" ry="13" transform="rotate(35 152 100)"/>
+    <path d="M76 86 L58 120 L66 126 L84 96 Z"/>
+    <path d="M78 132 L70 230 L86 230 L96 150 Z"/>
+    <path d="M120 132 L132 230 L116 230 L104 150 Z"/>`),
+  guitarrista: sil(`
+    <ellipse cx="100" cy="40" rx="17" ry="20"/>
+    <path d="M82 57 Q100 68 118 57 L126 120 Q100 136 74 120 Z"/>
+    <ellipse cx="120" cy="150" rx="36" ry="28"/>
+    <rect x="120" y="96" width="62" height="9" rx="4" transform="rotate(-32 120 96)"/>
+    <path d="M76 96 L62 150 L72 154 L92 116 Z"/>
+    <path d="M128 96 L150 150 L160 144 L140 110 Z"/>
+    <path d="M82 130 L74 232 L90 232 L98 150 Z"/>
+    <path d="M118 132 L130 232 L114 232 L104 150 Z"/>`),
+  baixista: sil(`
+    <ellipse cx="100" cy="40" rx="17" ry="20"/>
+    <path d="M82 57 Q100 68 118 57 L126 124 Q100 140 74 124 Z"/>
+    <ellipse cx="124" cy="160" rx="34" ry="30"/>
+    <rect x="116" y="104" width="84" height="8" rx="4" transform="rotate(-28 116 104)"/>
+    <path d="M76 98 L60 156 L70 160 L92 120 Z"/>
+    <path d="M128 100 L152 156 L162 150 L142 114 Z"/>
+    <path d="M82 134 L72 234 L88 234 L98 156 Z"/>
+    <path d="M118 136 L132 234 L116 234 L104 156 Z"/>`),
+  baterista: sil(`
+    <ellipse cx="100" cy="38" rx="17" ry="20"/>
+    <path d="M80 55 Q100 66 120 55 L130 116 Q100 128 70 116 Z"/>
+    <ellipse cx="100" cy="196" rx="56" ry="44"/>
+    <ellipse cx="100" cy="196" rx="40" ry="30" fill="#0d0d0d"/>
+    <path d="M78 92 L40 52 L48 44 L92 84 Z"/>
+    <path d="M122 92 L168 58 L174 66 L130 100 Z"/>
+    <circle cx="40" cy="50" r="6"/><circle cx="170" cy="62" r="6"/>
+    <path d="M86 120 L70 168 L82 170 L98 130 Z"/>
+    <path d="M114 120 L132 168 L120 172 L102 130 Z"/>`),
+  tecladista: sil(`
+    <ellipse cx="100" cy="40" rx="17" ry="20"/>
+    <path d="M80 57 Q100 68 120 57 L130 132 Q100 148 70 132 Z"/>
+    <rect x="34" y="150" width="132" height="26" rx="3"/>
+    <g fill="#0d0d0d"><rect x="44" y="152" width="3" height="14"/><rect x="58" y="152" width="3" height="14"/><rect x="72" y="152" width="3" height="14"/><rect x="86" y="152" width="3" height="14"/><rect x="100" y="152" width="3" height="14"/><rect x="114" y="152" width="3" height="14"/><rect x="128" y="152" width="3" height="14"/><rect x="142" y="152" width="3" height="14"/><rect x="156" y="152" width="3" height="14"/></g>
+    <path d="M76 92 L56 146 L66 150 L92 116 Z"/>
+    <path d="M124 92 L144 146 L134 150 L108 116 Z"/>
+    <path d="M82 176 L74 234 L90 234 L98 178 Z"/>
+    <path d="M118 176 L130 234 L114 234 L104 178 Z"/>`)
+};
 
-    const busyCache = {}; // "YYYY-MM" → Set<number>
+/* ====== dados dos integrantes (TROQUE NOME E BIO) ====== */
+const MEMBERS=[
+  {role:"Vocalista",  name:"[NOME DO VOCALISTA]",  key:"vocalista",  roman:"I",
+   bio:"[Bio do vocalista — uma ou duas frases sobre a voz que abre a porta. Origem, influências, o que traz pro palco.]"},
+  {role:"Guitarrista",name:"[NOME DO GUITARRISTA]",key:"guitarrista",roman:"II",
+   bio:"[Bio do guitarrista — riffs, pedais, o muro de som psicodélico. Edite com a história real da pessoa.]"},
+  {role:"Baixista",   name:"[NOME DO BAIXISTA]",   key:"baixista",   roman:"III",
+   bio:"[Bio do baixista — o grave hipnótico que sustenta o transe. Troque por texto real.]"},
+  {role:"Baterista",  name:"[NOME DO BATERISTA]",  key:"baterista",  roman:"IV",
+   bio:"[Bio do baterista — pulso ritual, levada cadenciada. Edite aqui.]"},
+  {role:"Tecladista", name:"[NOME DO TECLADISTA]", key:"tecladista", roman:"V",
+   bio:"[Bio do tecladista — texturas, órgão, sintetizadores e atmosfera. Substitua pelo real.]"},
+];
 
-    const MONTHS = [
-      'Janeiro','Fevereiro','Março','Abril','Maio','Junho',
-      'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'
-    ];
-    const DAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+/* ====== render character-select ====== */
+const figure=document.getElementById('figure');
+const stage=document.getElementById('stage');
+const bioIndex=document.getElementById('bioIndex');
+const bioRole=document.getElementById('bioRole');
+const bioName=document.getElementById('bioName');
+const bioText=document.getElementById('bioText');
+const picker=document.getElementById('picker');
+let cur=0;
 
-    // ── Google Calendar fetch ─────────────────────────────────────────────
-    async function fetchBusy(year, month) {
-      const key = `${year}-${month}`;
-      if (busyCache[key]) return busyCache[key];
+MEMBERS.forEach((m,i)=>{
+  const p=document.createElement('div');
+  p.className='pick'+(i===0?' active':'');
+  p.innerHTML=SIL[m.key].replace('class="silhouette"','')+`<span class="tag">${m.role.slice(0,3)}</span>`;
+  p.addEventListener('click',()=>go(i));
+  picker.appendChild(p);
+});
+const picks=[...picker.children];
 
-      const busy = new Set();
+function render(i){
+  const m=MEMBERS[i];
+  figure.innerHTML=SIL[m.key];
+  bioIndex.textContent=m.roman+" / V";
+  bioRole.textContent=m.role;
+  bioName.textContent=m.name;
+  bioText.textContent=m.bio;
+  picks.forEach((p,k)=>p.classList.toggle('active',k===i));
+}
+const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let busy=false;
+function go(i){
+  i=(i+MEMBERS.length)%MEMBERS.length;
+  if(i===cur||busy)return;
+  cur=i;
+  if(REDUCE){render(cur);return;}
+  busy=true;
+  stage.classList.add('fade-out');
+  setTimeout(()=>{
+    render(cur);
+    stage.classList.remove('fade-out');
+    setTimeout(()=>{busy=false;},280);
+  },300);
+}
+render(0);
 
-      if (CONFIG.googleCalendarId && CONFIG.googleApiKey) {
-        const tMin = new Date(year, month, 1).toISOString();
-        const tMax = new Date(year, month + 1, 0, 23, 59, 59).toISOString();
-        const url =
-          `https://www.googleapis.com/calendar/v3/calendars/` +
-          `${encodeURIComponent(CONFIG.googleCalendarId)}/events` +
-          `?key=${CONFIG.googleApiKey}` +
-          `&timeMin=${encodeURIComponent(tMin)}` +
-          `&timeMax=${encodeURIComponent(tMax)}` +
-          `&singleEvents=true&maxResults=100`;
+document.getElementById('next').addEventListener('click',()=>go(cur+1));
+document.getElementById('prev').addEventListener('click',()=>go(cur-1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight')go(cur+1);
+  if(e.key==='ArrowLeft')go(cur-1);
+});
 
-        try {
-          const res  = await fetch(url);
-          const data = await res.json();
-          (data.items || []).forEach(ev => {
-            const start = new Date(ev.start.date || ev.start.dateTime);
-            const end   = new Date(ev.end.date   || ev.end.dateTime);
-            for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
-              if (d.getFullYear() === year && d.getMonth() === month) {
-                busy.add(d.getDate());
-              }
-            }
-          });
-        } catch (e) {
-          console.warn('Erro ao carregar Google Calendar:', e);
-        }
-      }
-
-      busyCache[key] = busy;
-      return busy;
-    }
-
-    // ── Render calendar ───────────────────────────────────────────────────
-    async function renderCalendar(year, month) {
-      const grid    = document.getElementById('calendar-grid');
-      const label   = document.getElementById('month-label');
-      const loading = document.getElementById('loading-calendar');
-      const btnPrev = document.getElementById('btn-prev');
-
-      label.textContent = `${MONTHS[month]} ${year}`;
-
-      // Disable "prev" if already on current month
-      const isCurrentMonth = year === today.getFullYear() && month === today.getMonth();
-      btnPrev.disabled = isCurrentMonth;
-
-      if (CONFIG.googleCalendarId && CONFIG.googleApiKey) {
-        loading.style.display = 'block';
-      }
-      grid.style.opacity = '0.35';
-
-      const busy = await fetchBusy(year, month);
-
-      loading.style.display = 'none';
-      grid.style.opacity = '1';
-      grid.innerHTML = '';
-
-      // Day-of-week headers
-      DAYS.forEach(d => {
-        const el = document.createElement('div');
-        el.className = 'cal-day-header';
-        el.textContent = d;
-        grid.appendChild(el);
-      });
-
-      const firstDow     = new Date(year, month, 1).getDay();
-      const daysInMonth  = new Date(year, month + 1, 0).getDate();
-
-      // Empty leading cells
-      for (let i = 0; i < firstDow; i++) {
-        const el = document.createElement('div');
-        el.className = 'cal-day empty';
-        grid.appendChild(el);
-      }
-
-      // Day cells
-      for (let day = 1; day <= daysInMonth; day++) {
-        const cellDate = new Date(year, month, day);
-        const isToday    = cellDate.getTime() === today.getTime();
-        const isPast     = cellDate < today;
-        const isBusy     = busy.has(day);
-        const isSelected = selectedDate &&
-          selectedDate.getDate() === day &&
-          selectedDate.getMonth() === month &&
-          selectedDate.getFullYear() === year;
-
-        const btn = document.createElement('button');
-        btn.className = 'cal-day';
-        if (isToday)    btn.classList.add('today');
-        if (isBusy)     btn.classList.add('busy');
-        if (isSelected) btn.classList.add('selected');
-
-        btn.innerHTML = `<span>${day}</span>${isBusy ? '<span class="busy-label">ocupado</span>' : ''}`;
-        btn.disabled  = isPast || isBusy;
-
-        const label2 = isBusy ? 'ocupado' : isPast ? 'data passada' : 'disponível';
-        btn.setAttribute('aria-label', `${day} de ${MONTHS[month]} — ${label2}`);
-
-        if (!isPast && !isBusy) {
-          btn.addEventListener('click', () => selectDate(new Date(year, month, day)));
-        }
-
-        grid.appendChild(btn);
-      }
-    }
-
-    // ── Select date ───────────────────────────────────────────────────────
-    function selectDate(date) {
-      selectedDate = date;
-      renderCalendar(viewYear, viewMonth);
-      renderForm(date);
-    }
-
-    // ── Render booking form ───────────────────────────────────────────────
-    function renderForm(date) {
-      const section = document.getElementById('booking-section');
-      const fmt = date.toLocaleDateString('pt-BR', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-      });
-
-      section.innerHTML = `
-        <div class="booking-form-wrapper">
-          <div class="date-display">
-            <div class="lbl">Data selecionada</div>
-            <div class="val">${fmt}</div>
-          </div>
-
-          <div class="form-group">
-            <label for="f-name">Seu nome (contratante)</label>
-            <input type="text" id="f-name" placeholder="Ex: João Silva" autocomplete="name" />
-          </div>
-
-          <div class="form-group">
-            <label for="f-venue">Nome do local / evento</label>
-            <input type="text" id="f-venue" placeholder="Ex: Bar da Vila, Festa de Formatura..." />
-          </div>
-
-          <div class="form-group">
-            <label for="f-city">Cidade (SP)</label>
-            <input type="text" id="f-city" placeholder="Ex: Santos, São Paulo, Campinas..." />
-          </div>
-
-          <div class="form-group">
-            <label for="f-extra">Detalhes extras (opcional)</label>
-            <textarea id="f-extra" placeholder="Tipo de evento, público esperado, horário aproximado..."></textarea>
-          </div>
-
-          <button class="wa-btn" onclick="sendWhatsApp()">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-            </svg>
-            Mandar Proposta via WhatsApp
-          </button>
-        </div>
-      `;
-
-      setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
-    }
-
-    // ── Build & open WhatsApp link ────────────────────────────────────────
-    function sendWhatsApp() {
-      const name  = document.getElementById('f-name').value.trim();
-      const venue = document.getElementById('f-venue').value.trim();
-      const city  = document.getElementById('f-city').value.trim();
-      const extra = document.getElementById('f-extra').value.trim();
-
-      if (!name)  { alert('Por favor, preencha seu nome.'); return; }
-      if (!venue) { alert('Por favor, preencha o nome do local ou evento.'); return; }
-      if (!city)  { alert('Por favor, preencha a cidade.'); return; }
-
-      if (CONFIG.whatsapp === 'SEU_NUMERO_AQUI') {
-        alert('⚠️ Número de WhatsApp ainda não configurado no arquivo index.html.');
-        return;
-      }
-
-      const fmt = selectedDate.toLocaleDateString('pt-BR', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-      });
-
-      let msg =
-        `Olá, Poison Door! 🤘🎸\n\n` +
-        `Gostaria de fazer uma proposta de show para a banda:\n\n` +
-        `📅 *Data:* ${fmt}\n` +
-        `👤 *Contratante:* ${name}\n` +
-        `🏠 *Local / Evento:* ${venue}\n` +
-        `📍 *Cidade:* ${city} — SP`;
-
-      if (extra) msg += `\n\n📝 *Detalhes:* ${extra}`;
-
-      msg += `\n\nAguardo o contato de vocês para combinarmos os detalhes! 🙏`;
-
-      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    // ── Navigation ────────────────────────────────────────────────────────
-    document.getElementById('btn-prev').addEventListener('click', () => {
-      const d = new Date(viewYear, viewMonth - 1, 1);
-      if (d < new Date(today.getFullYear(), today.getMonth(), 1)) return;
-      viewYear  = d.getFullYear();
-      viewMonth = d.getMonth();
-      renderCalendar(viewYear, viewMonth);
-    });
-
-    document.getElementById('btn-next').addEventListener('click', () => {
-      const d = new Date(viewYear, viewMonth + 1, 1);
-      viewYear  = d.getFullYear();
-      viewMonth = d.getMonth();
-      renderCalendar(viewYear, viewMonth);
-    });
-
-    // ── Init ──────────────────────────────────────────────────────────────
-    renderCalendar(viewYear, viewMonth);
-  </script>
+/* arrastar / swipe */
+let dragX=null;
+function start(x){dragX=x}
+function end(x){
+  if(dragX===null)return;
+  const d=x-dragX;dragX=null;
+  if(Math.abs(d)>50){d<0?go(cur+1):go(cur-1);}
+}
+stage.addEventListener('pointerdown',e=>start(e.clientX));
+stage.addEventListener('pointerup',e=>end(e.clientX));
+stage.addEventListener('pointercancel',()=>dragX=null);
+stage.addEventListener('touchstart',e=>start(e.touches[0].clientX),{passive:true});
+stage.addEventListener('touchend',e=>end(e.changedTouches[0].clientX),{passive:true});
+</script>
 </body>
 </html>
